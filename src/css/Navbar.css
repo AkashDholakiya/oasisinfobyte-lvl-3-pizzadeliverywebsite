@@ -1,0 +1,48 @@
+::-webkit-scrollbar {
+    display: none;
+}
+.color{
+    background-color: black !important;
+    height: 70px;
+    border-radius: 20px;    
+}
+.navbar-brand{
+    margin-left: 15px;
+}
+
+.btn{
+    border-radius: 13px;
+    background-color: orange;
+    color: black;
+    outline: none;
+    border: 3px groove orange;
+    padding: 5px 20px;
+}
+.btn:active{
+    background-color: orange !important;
+    color: black !important;
+    border: 3px groove black !important;
+}
+.btn:hover{
+    background-color: black;
+    color: orange;
+    border: 3px groove orange;
+}
+.nav-link{
+    padding: 7px;
+    color: white;
+    border: 3px groove grey;
+    border-radius: 20px;
+}
+.nav-link:hover{
+    color: orange;
+    border-radius: 20px;
+    border: 3px groove orange;
+}
+.active{
+    background-color: orange;
+    color: black !important;
+    border-radius: 20px;
+    border: 3px solid orange;
+}
+

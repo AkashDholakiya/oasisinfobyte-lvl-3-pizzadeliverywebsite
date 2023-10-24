@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const JWT_SECRET = "Akash$02$1232"
+require('dotenv').config();
 
 const TokenVerify = (req,res,next) => { 
     const token = req.header('auth-token');
@@ -7,7 +7,7 @@ const TokenVerify = (req,res,next) => {
         return res.status(401).json({success:false, message:"Unauthorized"});
     }
     try {
-        const decoded = jwt.verify(token, process.env.JWT_SECRET || JWT_SECRET);
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
         req.user = decoded.user;
         next();
     } catch (error) { 

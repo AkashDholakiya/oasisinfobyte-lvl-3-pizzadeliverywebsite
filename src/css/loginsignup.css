@@ -1,0 +1,68 @@
+.logsig{
+    display: flex;
+    margin-top: 5vh;    
+    padding: 10px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center; 
+    width : 30vw;
+    border: 3px groove gray;
+    border-radius: 30px;
+    box-shadow: 10px 10px 10px gray;
+    background: lightyellow;
+}
+.logsig h1{
+    font-family :Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.logsig form input[type="text"], .logsig form input[type="password"], .logsig form input[type="email"]{
+    width: 400px;
+}
+.form-label .form-check-label{
+    font-weight: bold;
+}
+.submit{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.center{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 15px;
+    margin-top: 10px;
+    text-align: center;
+}
+.link{
+    text-decoration: none;
+    color: black;
+    font-size: 16px;
+    text-align: center;
+}
+.form-control{
+    border: 2px solid grey;
+}
+.form-control:focus{
+    box-shadow: 0px 0px 5px grey;
+    border: 2px solid black;
+    /* box-shadow: none; */
+}
+input[type="checkbox"]{
+    color: black;
+    border: 1px solid black;    
+}
+input[type="checkbox"]:hover{
+    cursor: pointer;    
+}
+input[type="checkbox"]:active{
+    box-shadow: none;    
+}
+input[type="checkbox"]:checked{
+    background-color: orange;
+    border: 1px solid black;
+    box-shadow: none;
+}
+.link:hover{
+    text-decoration: underline;
+}

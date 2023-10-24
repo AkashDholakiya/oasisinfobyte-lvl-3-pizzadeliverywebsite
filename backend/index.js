@@ -7,16 +7,16 @@ const dotenv = require('dotenv');
 const app = express();
 const port = process.env.PORT || 4000;
 
-// middleware
-app.use(cors());
+// middleware 
+app.use(cors()); 
 app.use(express.json());
 dotenv.config();
 
 // routes 
 app.use('/api/v1/auth/', auth);
-app.get('/', (req, res) => {
-    res.send('Hello World!');
-});
+// app.get('/', (req, res) => {
+//     res.send('Hello World!');
+// });
 
 
 

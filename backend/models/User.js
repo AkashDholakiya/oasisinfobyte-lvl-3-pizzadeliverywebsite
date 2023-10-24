@@ -15,13 +15,14 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    photo:{
-        type:String,
-    },
     role:{
         type:String,
         default: "user",
+    },
+    verifytoken:{
+        type: String,
     }
+    
 });
  
 module.exports = mongoose.model("User", userSchema);
