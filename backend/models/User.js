@@ -11,6 +11,10 @@ const userSchema = new mongoose.Schema({
         required: true,
         unique: true, 
     },
+    verifyEmail:{
+        type: Boolean,
+        default: false,
+    }, 
     password:{       
         type: String,
         required: true,
@@ -21,8 +25,11 @@ const userSchema = new mongoose.Schema({
     },
     verifytoken:{
         type: String,
-    }
-    
+    },
+    createdAt: {
+        type: Date,
+        default: Date.now,
+    },
 });
  
 module.exports = mongoose.model("User", userSchema);

@@ -1,9 +1,12 @@
 import React, { useState } from 'react'
 import { useNavigate,Link } from 'react-router-dom'
 import '../css/loginsignup.css'
+import {AiOutlineEyeInvisible} from 'react-icons/ai'
+import {AiOutlineEye} from 'react-icons/ai'
 
 const Login = (props) => {
     const [cred, setcred] = useState({ nameemail: '', password: '', role: 'user' });
+    const [eyeshow, seteyeshow] = useState(false);
     let Navigate = useNavigate();
     const handle = async (e) => {
         let validation = true;
@@ -11,6 +14,14 @@ const Login = (props) => {
             alert("Please fill all the fields");
             validation = false;
         }
+        // const handleeye = () => {
+        //     seteyeshow(!eyeshow)
+        //     document.getElementById('password').type = eyeshow ? 'password' : 'text';
+        // }
+        // const handleeye = () => {
+        //     seteyeshow(!eyeshow)
+        //     document.getElementById('password').type = eyeshow ? 'password' : 'text';
+        // }
         if(validation){
             e.preventDefault();
             const response = await fetch(`http://localhost:4000/api/v1/auth/login`, {
@@ -50,8 +61,15 @@ const Login = (props) => {
                     <input type="nameemail" className="form-control" value={cred.nameemail} onChange={onChange} id="nameemail" name="nameemail" aria-describedby="nameemailHelp" />
                 </div>
                 <div className="mb-3">
-                    <label htmlFor="password" className="form-label">Password</label>
-                    <input type="password" className="form-control" value={cred.password} onChange={onChange} id="password" name='password' />
+                <label htmlFor="password" className="form-label">Password</label>
+                    <div className="input-group passeye">
+                        <input type="password" className="form-control" value={cred.password} onChange={onChange} id="password" name='password' />
+                        {!eyeshow ? <span className='eye' onClick={() => {seteyeshow(!eyeshow)
+                        document.getElementById('password').type = eyeshow ? 'password' : 'text';}}><AiOutlineEye/></span>
+                        : <span className='eye' onClick={() => {seteyeshow(!eyeshow)
+                        document.getElementById('password').type = eyeshow ? 'password' : 'text';
+                        }}><AiOutlineEyeInvisible/></span>}
+                    </div>
                 </div>
                 <div className="form-check my-2 mb-3">
                     <input className="form-check-input" type="checkbox" name="role" id="admin" onChange={() => cred.role = cred.role === 'user' ? 'admin' : 'user'} />

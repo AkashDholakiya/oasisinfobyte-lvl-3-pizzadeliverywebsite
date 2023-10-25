@@ -15,8 +15,11 @@
     font-family :Verdana, Geneva, Tahoma, sans-serif;
 }
 
-.logsig form input[type="text"], .logsig form input[type="password"], .logsig form input[type="email"]{
-    width: 400px;
+.logsig form input[type="password"]{
+    width: 380px;
+}
+.logsig form input[type="text"]{
+    width: 380px;
 }
 .form-label .form-check-label{
     font-weight: bold;
@@ -33,6 +36,22 @@
     font-size: 15px;
     margin-top: 10px;
     text-align: center;
+}
+.eye{
+    background-color: transparent;
+    border-top: 2px solid grey;
+    border-right: 2px solid grey;
+    border-bottom: 2px solid grey;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+    color: var(--white);
+    outline: none;
+    cursor: pointer;
+    font-size: 20px;
+    width: 40px;
+    transition: all 0.5s;   
 }
 .link{
     text-decoration: none;

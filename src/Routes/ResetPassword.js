@@ -1,9 +1,14 @@
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+import '../css/loginsignup.css'
+import {AiOutlineEyeInvisible} from 'react-icons/ai'
+import {AiOutlineEye} from 'react-icons/ai'
 
 const ResetPassword = () => {
+    const Navigate = useNavigate();
     const { id, token } = useParams();
     const [cred, setcred] = useState({ password: ''});
+    const [eyeshow, seteyeshow] = useState(false);
     const validateUser = async () => {
         const res = await fetch(`http://localhost:4000/api/v1/auth/reset-password/${id}/${token}`, {
             method: 'GET',
@@ -16,6 +21,7 @@ const ResetPassword = () => {
         if (data.success) {
             console.log("User Valid");
         } else {
+            Navigate('/errorpage');
             alert("TOKEN EXPIRED!!");
         }
     }
@@ -38,6 +44,7 @@ const ResetPassword = () => {
             console.log(json);
             if (json.success) {
                 alert("Password Changed Successfully");
+                Navigate('/login')
             } else {
                 alert("Invalid Credentials");
             }
@@ -63,7 +70,14 @@ const ResetPassword = () => {
             <form onSubmit={handle}>
                 <div className="mb-3">
                     <label htmlFor="password" className="form-label">New Password</label>
-                    <input type="password" className="form-control" value={cred.password} onChange={onChange} id="password" name='password' />
+                    <div className="input-group passeye">
+                        <input type="password" className="form-control" value={cred.password} onChange={onChange} id="password" name='password' />
+                        {!eyeshow ? <span className='eye' onClick={() => {seteyeshow(!eyeshow)
+                        document.getElementById('password').type = eyeshow ? 'password' : 'text';}}><AiOutlineEye/></span>
+                        : <span className='eye' onClick={() => {seteyeshow(!eyeshow)
+                        document.getElementById('password').type = eyeshow ? 'password' : 'text';
+                        }}><AiOutlineEyeInvisible/></span>}
+                    </div>
                 </div>
                 <div className="submit">
                 <button type="submit" className="btn btn-primary my-2">Send</button>

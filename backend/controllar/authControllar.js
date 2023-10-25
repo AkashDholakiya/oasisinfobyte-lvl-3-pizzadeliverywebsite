@@ -1,8 +1,27 @@
 const User = require('../models/User');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const JWT_SECRET = "Akash$02$1232";
+const schedule = require('node-schedule');
+require('dotenv').config();
+const JWT_SECRET = process.env.JWT_SECRET;
 const nodemailer = require('nodemailer');
+
+schedule.scheduleJob('*/1 * * * *', async () => {
+    const oneHourAgo = new Date();
+    oneHourAgo.setHours(oneHourAgo.getHours() - 1);
+  
+    // Find unverified accounts created more than 1 hour ago
+    const unverifiedUsersToDelete = await User.find({
+      verifyEmail: false,
+      createdAt: { $lt: oneHourAgo },
+    });
+  
+    // Delete the unverified accounts
+    unverifiedUsersToDelete.forEach(async (user) => {
+      await User.findByIdAndRemove(user._id);
+      console.log(`Deleted unverified user with ID: ${user._id}`);
+    });
+});
 
 const register = async (req, res) => {
     try {
@@ -26,7 +45,40 @@ const register = async (req, res) => {
                 role: newUser.role
             }
         }
-        const token = jwt.sign(data, process.env.JWT_SECRET || JWT_SECRET, { expiresIn: "15d" });
+        const token = jwt.sign(data, process.env.JWT_SECRET || JWT_SECRET, { expiresIn: "1d" });
+
+        const setusertoken = await User.findByIdAndUpdate({_id:newUser._id},{verifytoken:token},{new:true})
+
+        if(setusertoken){
+            var transporter = nodemailer.createTransport({
+                service: 'gmail',
+                auth: {
+                    user: process.env.USER_EMAIL,
+                    pass: process.env.USER_PASSWORD
+                }
+            });
+
+            var mailOptions = {
+                from: process.env.USER_EMAIL,
+                to: req.body.email,
+                subject: 'Account Verification',
+                html: `
+                <h2>Account Verification</h2>
+                <p>Click on the link to verify your account</p>
+                <a href="http://localhost:3000/verify/${newUser._id}/${token}">Click Here to verify your account</a>
+                <h3>&#169; all right reserved</h3>`
+            };        
+
+            transporter.sendMail(mailOptions, (error, info) => {
+                if (error) {
+                    console.log(error);
+                    res.status(500).json({ success: false, message: "Failed To send Email", error: error.message });
+                } else {
+                    console.log('Email sent: ' + info.response);
+                    res.status(200).json({ success: true, message: "Email Sent Successfully" });
+                }
+            });
+        }
 
         res.status(200).json({ success: true, token, username: req.body.username, message: "User has been registered successfully" });
 
@@ -190,7 +242,7 @@ const ResetPassword = async (req,res) => {
         console.log("User found");
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
-        const setpassword = await User.findByIdAndUpdate({_id:id},{password:hashedPassword});
+        const setpassword = await User.findByIdAndUpdate({_id:id},{password:hashedPassword,verifytoken:null});
 
         if(!setpassword){
             return res.status(404).json({ success: false, message: "User not found" });
@@ -201,5 +253,26 @@ const ResetPassword = async (req,res) => {
     }
 }
 
+const VerifyEmail = async (req,res) => {
+    const {id,token} = req.params;
+    try {
+        const user = await User.findOne({_id:id,verifytoken:token});
 
-module.exports = { register, login, getuser, EditUser, DeleteUser, ForgotPass,validateUser, ResetPassword }; 
+        const verifyToken = jwt.verify(token, process.env.JWT_SECRET || JWT_SECRET);
+        if(!user || !verifyToken){
+            return res.status(404).json({ success: false, message: "User not found" });
+        }
+
+        const setverify = await User.findByIdAndUpdate({_id:id},{verifytoken:null,verifyEmail:true});
+
+        if(!setverify){
+            return res.status(404).json({ success: false, message: "User not found" });
+        }
+        return res.status(200).json({ success: true, message: "User has been fetched successfully"});
+    } catch (error) {
+        return res.status(500).json({ success: false, message: "Failed To fetch", error: error.message });
+    }
+}
+
+
+module.exports = { register, login, getuser, EditUser, DeleteUser, ForgotPass,validateUser, ResetPassword,VerifyEmail }; 
