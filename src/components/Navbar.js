@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
+import {BsFillCartFill} from 'react-icons/bs'
 import '../css/Navbar.css'
 
 const Navbar = () => {
@@ -13,7 +14,7 @@ const Navbar = () => {
     <div>
         <nav className="navbar navbar-expand-lg navbar-dark bg-dark color">
         <div className="container-fluid">
-            <Link className="navbar-brand" to="/">PizzaOnCall</Link>
+            <Link className="navbar-brand" to="/">PizzaSwift</Link>
             <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="/navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span className="navbar-toggler-icon"></span>
             </button>
@@ -26,10 +27,13 @@ const Navbar = () => {
                 <Link className={`nav-link ${location.pathname === '/about' ? 'active' : ''}`} to="/about">About</Link>
                 </li>
             </ul>
-            {!localStorage.getItem('token') ? <form className="d-flex" role="search">
+            <div className="right">
+                <Link className={`cart-btn mx-3 ${location.pathname === "/cart" ? "active" : ""}`} to="/cart" ><BsFillCartFill/></Link>
+            </div>
+            {!localStorage.getItem('token') ? <div className="left">
                 <Link className="btn btn-outline-primary mx-2" to="/login" role="button">Login</Link>
                 <Link className="btn btn-primary mx-2" to="/signup" role="button">Signup</Link>
-            </form> : <button onClick={handleLogout} className='btn btn-primary '>Logout</button> }
+                </div>: <Link onClick={handleLogout} className='btn btn-primary mx-3'>Logout</Link> }
             </div>
         </div>
         </nav>

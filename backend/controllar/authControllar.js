@@ -9,7 +9,7 @@ const nodemailer = require('nodemailer');
 schedule.scheduleJob('*/1 * * * *', async () => {
     const oneHourAgo = new Date();
     oneHourAgo.setHours(oneHourAgo.getHours() - 1);
-  
+   
     // Find unverified accounts created more than 1 hour ago
     const unverifiedUsersToDelete = await User.find({
       verifyEmail: false,
@@ -32,7 +32,7 @@ const register = async (req, res) => {
         const newUser = await User.create({
             username: req.body.username,
             email: req.body.email,
-            password: hashedPassword,
+            password: hashedPassword, 
             role: req.body.role
         })
 
@@ -110,7 +110,7 @@ const login = async (req, res) => {
             return res.status(401).json({ success: false, message: "Please Login with correct credential" });
         }
 
-        const token = jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET || JWT_SECRET, { expiresIn: "15d" });
+        const token = jwt.sign({ user, id: user._id, role: user.role }, process.env.JWT_SECRET || JWT_SECRET, { expiresIn: "15d" });
 
         res.cookie("accessToken", token, {
             httpOnly: true,
