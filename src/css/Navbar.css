@@ -40,6 +40,10 @@
     border-radius: 20px;
 }
 
+.create-pizz{
+    color: white !important;
+}
+
 .cart-btn{
     padding: 5px 7px;
     color: white;

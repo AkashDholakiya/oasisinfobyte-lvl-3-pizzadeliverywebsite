@@ -14,14 +14,7 @@ const Login = (props) => {
             alert("Please fill all the fields");
             validation = false;
         }
-        // const handleeye = () => {
-        //     seteyeshow(!eyeshow)
-        //     document.getElementById('password').type = eyeshow ? 'password' : 'text';
-        // }
-        // const handleeye = () => {
-        //     seteyeshow(!eyeshow)
-        //     document.getElementById('password').type = eyeshow ? 'password' : 'text';
-        // }
+        
         if(validation){
             e.preventDefault();
             const response = await fetch(`http://localhost:4000/api/v1/auth/login`, {

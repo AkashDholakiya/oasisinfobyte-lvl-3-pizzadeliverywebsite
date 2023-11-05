@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import {Link} from 'react-router-dom'
 import '../css/dashboard.css'
-import BGIMG from '../images/PizzaBackgrounf.jpg'
 
 const Dashboard = () => {
   const [data,setData] = useState([]);
@@ -39,36 +38,38 @@ const Dashboard = () => {
     }
   }
   return (
-    <div className={`${localStorage.getItem('token') ? 'container pizzamain my-5' : ''}`}>
-
-      {localStorage.getItem('token') ? data.map((item) => {
-        return (
-          <div className="card" style={{width: "18rem"}} key={item._id} >
-            <img src={item.imageUrl} className="card-img-top" alt="..." />
-            <div className="ingredients">
-            <h5 className="card-title"><b>Base :</b> {item.base}</h5>
-            <h5 className="card-title"><b>Sauce :</b> {item.sauce}</h5>
-            <h5 className="card-title"><b>Cheese :</b> {item.cheese}</h5>
-            <h5 className='card-title'><b>price : </b><span style={{color : "green"}}>{item.price}</span></h5>
-            <h5 className="card-title"><b>Quantity :</b><input type="number" name={`number-${item._id}`} id={`quantity-${item._id}`} className='quantityInput' value={quantity} onChange={(e) => setQuantity(e.target.value)} autoComplete='off' /></h5>
+    <div>
+      {localStorage.getItem('token') && <h1 className='text-center' style={{marginTop:"30px",fontSize:"50px"}}>Dashboard</h1>}
+      <div className={`${localStorage.getItem('token') ? 'container pizzamain my-5' : ''}`}>
+        {localStorage.getItem('token') ? data.map((item) => {
+          return (
+            <div className="card" style={{width: "18rem"}} key={item._id} >
+              <img src={item.imageUrl} className="card-img-top" alt="..." />
+              <div className="ingredients">
+              <h5 className="card-title"><b>Base :</b> {item.base}</h5>
+              <h5 className="card-title"><b>Sauce :</b> {item.sauce}</h5>
+              <h5 className="card-title"><b>Cheese :</b> {item.cheese}</h5>
+              <h5 className='card-title'><b>price : </b><span style={{color : "green"}}>{item.price}</span></h5>
+              <h5 className="card-title"><b>Quantity :</b><input type="number" name={`number-${item._id}`} id={`quantity-${item._id}`} className='quantityInput' value={quantity} onChange={(e) => setQuantity(e.target.value)} autoComplete='off' /></h5>
+              </div>
+              <div className="card-body">
+                <h5 className="card-title">{item.name}</h5>
+                <p className="card-text">{item.description}</p>
+                <button style={{marginBottom:"20px"}} className="btn btn-primary">Buy Now!!</button>
+                <button className="btn btn-primary" onClick={(e) => addtoCart(e,item)}>Add to Cart</button>
+              </div>
             </div>
-            <div className="card-body">
-              <h5 className="card-title">{item.name}</h5>
-              <p className="card-text">{item.description}</p>
-              <button style={{marginBottom:"20px"}} className="btn btn-primary">Buy Now!!</button>
-              <button className="btn btn-primary" onClick={(e) => addtoCart(e,item)}>Add to Cart</button>
+          )}
+        ) : 
+        <div className='maincontainer'>
+            <div className="abs">
+              <h1>PizzaSwift</h1>
+              <p>Savor the Flavor of Pizza with a Pinch of Swift</p>
+              <Link to='/signup' >Let's Go!</Link>
             </div>
-          </div>
-        )}
-      ) : 
-      <div className='maincontainer'>
-          <div className="abs">
-            <h1>PizzaSwift</h1>
-            <p>Savor the Flavor of Pizza with a Pinch of Swift</p>
-            <Link to='/signup' >Let's Go!</Link>
-          </div>
+        </div>
+        }
       </div>
-      }
     </div>
   )
 }

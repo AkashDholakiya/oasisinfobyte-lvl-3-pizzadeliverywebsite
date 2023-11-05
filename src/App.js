@@ -10,6 +10,7 @@ import VerifyEmail from "./Routes/VerifyEmail";
 import Error from "./Routes/Error";
 import Cart from "./Routes/cart";
 import About from "./Routes/About";
+import CreatePizza from "./components/CreatePizza"; 
 
 function App() {
   const location = useLocation();
@@ -56,6 +57,7 @@ function App() {
         <Route path="/verify/:id/:token" element={<VerifyEmail />} />
         <Route path="/errorpage" element={<Error />} />
         <Route path="/cart" element={<Cart />} />
+        <Route path="/createpizza" element={<CreatePizza />} />
       </Routes>
     </div>
   );  

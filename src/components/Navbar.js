@@ -30,7 +30,7 @@ const Navbar = () => {
                 {localStorage.getItem('token')  && <Link className={`cart-btn mx-3 ${location.pathname === "/cart" ? "active" : ""}`} to="/cart" ><BsFillCartFill/></Link>}
             </div>
             <div className="right">
-                <button className='nav-link' style={{color:"white"}}> Create your pizza</button>
+                <Link to='/createpizza' className={`nav-link ${location.pathname === '/createpizza' ? 'active' : ''}`}> Create your pizza</Link>
             </div>
             {!localStorage.getItem('token') ? <div className="left">
                 <Link className="btn btn-outline-primary mx-2" to="/login" role="button">Login</Link>
