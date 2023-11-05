@@ -5,7 +5,7 @@ import '../css/loginsignup.css'
 import {AiOutlineEyeInvisible} from 'react-icons/ai'
 import {AiOutlineEye} from 'react-icons/ai'
 
-const Signup = (props) => {
+const Signup = () => {
     const [cred, setcred] = useState({username : '',email : '',password : '',cpassword: '',role : 'user'})
     const [eyeshow1, seteyeshow1] = useState(false);
     const [eyeshow2, seteyeshow2] = useState(false);

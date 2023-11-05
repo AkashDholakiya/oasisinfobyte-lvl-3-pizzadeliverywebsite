@@ -30,4 +30,14 @@ const GetCartItem = async (req, res) => {
     }
 }
 
-module.exports = {AddToCart,GetCartItem};
+const DeleteCartItem = async (req, res) => {
+    try {
+        const cartItems = await cartItem.findByIdAndDelete(req.params.id);
+        res.status(200).json({success:true, cartItems : cartItems});
+    
+    } catch (error) {
+        res.status(400).json({success:false, message: error.message});
+    }
+}
+
+module.exports = {AddToCart,GetCartItem,DeleteCartItem};

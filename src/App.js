@@ -9,6 +9,7 @@ import ResetPassword from "./Routes/ResetPassword";
 import VerifyEmail from "./Routes/VerifyEmail";
 import Error from "./Routes/Error";
 import Cart from "./Routes/cart";
+import About from "./Routes/About";
 
 function App() {
   const location = useLocation();
@@ -47,6 +48,7 @@ function App() {
       {location.pathname !== '/errorpage' &&  !location.pathname.startsWith('/reset-password/') && !location.pathname.startsWith('/verify/') && <Navbar/>}
       <Routes>
         <Route path="/" element={<Dashboard />} />
+        <Route path="/about" element={<About />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/forgot-password" element={<ForgotPass />} />
